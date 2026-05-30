@@ -1,0 +1,6 @@
+{
+  "name": "إرتقاء",
+  "description": "منصة إرتقاء الرقمية لطلب أفضل خدمات التصميم الاحترافي وبرمجة وتطوير المواقع والحلول التقنية المتكاملة بإنتاجية فائقة وسرعة قياسية.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
