@@ -414,6 +414,44 @@ export const productsList: Product[] = [
       }
     ]
   },
+  {
+    id: 'add-custom-domain',
+    name: 'إضافة دومين مخصص',
+    nameAr: 'إضافة دومين مخصص',
+    nameEn: 'Add Custom Domain',
+    type: 'programming',
+    price: 50,
+    description: 'ربط دومين مخصص احترافي بمشروعك (مثال: .com أو .sa) لتعزيز موثوقية علامتك.',
+    descriptionAr: 'ربط دومين مخصص احترافي بمشروعك (مثال: .com أو .sa) لتعزيز موثوقية علامتك.',
+    descriptionEn: 'Bind a professional custom domain to your project (example: .com or .sa) to increase brand equity.',
+    icon: 'Globe',
+    features: [
+      'ربط الدومين المخصص بالموقع أو المتجر بشكل فوري وسليم',
+      'توفير شهادة الأمان والحماية SSL المشفرة مجاناً',
+      'توجيه النطاقات وحل مشاكل الـ DNS للمشروع'
+    ],
+    featuresAr: [
+      'ربط الدومين المخصص بالموقع أو المتجر بشكل فوري وسليم',
+      'توفير شهادة الأمان والحماية SSL المشفرة مجاناً',
+      'توجيه النطاقات وحل مشاكل الـ DNS للمشروع'
+    ],
+    featuresEn: [
+      'Instant precise setup of custom domains with your web app',
+      'Complimentary provisioning of secure HTTPS/SSL details',
+      'Handle comprehensive DNS and modern route configurations'
+    ],
+    customFields: [
+      {
+        label: 'اسم الدومين المراد ربطه',
+        labelAr: 'اسم الدومين المراد ربطه',
+        labelEn: 'Domain Name to Connect',
+        placeholder: 'مثال: mybrand.com...',
+        placeholderAr: 'مثال: mybrand.com...',
+        placeholderEn: 'Example: mybrand.com...',
+        type: 'text'
+      }
+    ]
+  },
 
   // --- BUNDLES / PACKAGES ---
   {

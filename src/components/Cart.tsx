@@ -17,13 +17,27 @@ export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }
   const [customerPhone, setCustomerPhone] = useState('');
   const [generalNotes, setGeneralNotes] = useState('');
   
+  // Coupon state
+  const [couponInput, setCouponInput] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState('');
+  const [discountError, setDiscountError] = useState('');
+  const [discountSuccess, setDiscountSuccess] = useState('');
+
+  // Success Screen state
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [finalOrderNumber, setFinalOrderNumber] = useState('');
+  const [whatsappUrl, setWhatsappUrl] = useState('');
+
   // Validation state
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isAr = lang === 'ar';
 
-  const totalPrice = cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+  const basePrice = cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+  const discountPct = appliedCoupon ? 0.05 : 0;
+  const discountAmount = Math.round(basePrice * discountPct);
+  const totalPrice = basePrice - discountAmount;
 
   // Translation words dict
   const trans = {
@@ -86,7 +100,7 @@ export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }
 
     setIsSubmitting(true);
     
-    // Generate unique order number
+    // Generate unique order number (starts with 'or-' + 4 random digits)
     const orderNum = generateOrderNumber();
 
     const orderDetails: OrderDetails = {
@@ -94,8 +108,11 @@ export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }
       customerName: customerName.trim(),
       customerPhone: customerPhone.trim(),
       items: cartItems,
-      totalPrice,
+      totalPrice: basePrice,
       generalNotes: generalNotes.trim(),
+      couponApplied: appliedCoupon || undefined,
+      discountAmount: discountAmount || undefined,
+      finalPriceAfterDiscount: totalPrice || undefined,
       orderDate: new Date().toLocaleDateString(isAr ? 'ar-SA' : 'en-US', {
         weekday: 'long',
         year: 'numeric',
@@ -107,13 +124,81 @@ export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }
     };
 
     // Construct WhatsApp URL
-    const whatsappUrl = getWhatsAppHref(orderDetails, lang);
+    const whatsappUrlString = getWhatsAppHref(orderDetails, lang);
 
     setTimeout(() => {
       setIsSubmitting(false);
-      window.open(whatsappUrl, '_blank');
-    }, 800);
+      setFinalOrderNumber(orderNum);
+      setWhatsappUrl(whatsappUrlString);
+      setShowSuccess(true);
+      window.open(whatsappUrlString, '_blank');
+    }, 850);
   };
+
+  // Success view display
+  if (showSuccess) {
+    return (
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="bg-white border border-gray-100 rounded-[32px] p-6 text-center shadow-[0_12px_45px_rgba(0,0,0,0.04)] flex flex-col items-center justify-center min-h-[420px]"
+        id="cart-success-view"
+      >
+        <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center text-emerald-500 mb-5 border border-emerald-100 shadow-sm animate-bounce">
+          <ShieldCheck className="w-8 h-8 text-emerald-600" />
+        </div>
+        
+        <h3 className="text-lg font-black text-gray-950">
+          {isAr ? 'تم تأكيد طلبك بنجاح! 🎉' : 'Order Confirmed Successfully! 🎉'}
+        </h3>
+        
+        <p className="text-xs text-gray-500 mt-2 max-w-[280px] mx-auto leading-relaxed">
+          {isAr 
+            ? 'تم توليد رقم طلبك الفريد بنجاح. سنقوم في منصة إرتقاء الرقمية بدراسة متطلباتك والبدء فوراً!' 
+            : 'Your unique order reference has been created. Irteqa Platform is processing your request details.'}
+        </p>
+
+        {/* Unique Order ID Badge */}
+        <div className="my-5 bg-emerald-50/40 border border-emerald-100/50 px-6 py-3 rounded-2xl flex flex-col items-center justify-center w-full max-w-[220px]">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-emerald-600">
+            {isAr ? 'رقم الطلب الخاص بك' : 'Your Order Number'}
+          </span>
+          <span className="text-xl font-mono font-black text-emerald-700 mt-0.5 select-all">
+            {finalOrderNumber}
+          </span>
+        </div>
+
+        <div className="w-full space-y-3">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="w-full flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white font-black py-3 px-6 rounded-full transition-all text-xs"
+          >
+            <MessageSquare className="w-3.5 h-3.5" />
+            <span>{isAr ? 'الانتقال إلى المحادثة وبدء تنفيذ العمل' : 'Complete to WhatsApp Chat'}</span>
+          </a>
+
+          <button
+            onClick={() => {
+              // Reset state and clear cart
+              setCustomerName('');
+              setCustomerPhone('');
+              setGeneralNotes('');
+              setCouponInput('');
+              setAppliedCoupon('');
+              setDiscountSuccess('');
+              setShowSuccess(false);
+              onClearCart();
+            }}
+            className="w-full text-xs font-bold text-gray-400 hover:text-gray-800 py-2 transition-colors cursor-pointer"
+          >
+            {isAr ? 'إغلاق والعودة للموقع' : 'Close and Return to Shop'}
+          </button>
+        </div>
+      </motion.div>
+    );
+  }
 
   if (cartItems.length === 0) {
     return (
@@ -230,24 +315,90 @@ export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }
           </AnimatePresence>
         </div>
 
-        {/* Total Cost Display Badge */}
-        <div className={`bg-gray-50 border border-gray-100 rounded-2xl p-5 mb-6 flex justify-between items-center ${isAr ? 'flex-row' : 'flex-row-reverse'}`} id="total-summary-card">
-          <div className={isAr ? 'text-right' : 'text-left'}>
-            <span className="text-xs font-extrabold text-gray-400 uppercase tracking-wider">{trans.total_cost_lbl}</span>
-            <p className="text-[10px] text-gray-550 mt-1 flex items-center gap-1.5 font-bold">
-              <ShieldCheck className="w-3.5 h-3.5 shrink-0 text-emerald-555" />
-              {trans.safe_redirect}
-            </p>
-          </div>
-          <div className={`flex flex-col ${isAr ? 'text-left items-end' : 'text-right items-start'}`} id="total-price-badge">
-            <div>
-              <span className="text-4xl font-black text-black">{totalPrice}</span>
-              <span className="text-xs font-bold text-gray-400 ml-1 uppercase">{trans.sar}</span>
-            </div>
-            {cartItems.some(item => item.product.priceText) && (
-              <span className="text-[10px] text-gray-500 font-bold mt-1 block leading-tight">{trans.whatsapp_quote_notice}</span>
+        {/* Coupon Code Block */}
+        <div className="bg-gray-50 border border-gray-100 rounded-2xl p-4 mb-4" id="coupon-block">
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder={isAr ? 'أدخل كود الخصم' : 'Enter Coupon Code'}
+              value={couponInput}
+              onChange={(e) => setCouponInput(e.target.value)}
+              disabled={!!appliedCoupon}
+              className={`flex-grow text-xs bg-white border rounded-xl px-3 py-2 text-gray-950 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-950 transition-all ${
+                discountError ? 'border-rose-300' : 'border-gray-200'
+              }`}
+            />
+            {appliedCoupon ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setAppliedCoupon('');
+                  setCouponInput('');
+                  setDiscountSuccess('');
+                }}
+                className="text-xs font-bold text-rose-500 hover:text-rose-600 bg-rose-50 px-3 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap"
+              >
+                {isAr ? 'إزالة' : 'Remove'}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  const cleanCode = couponInput.trim();
+                  if (cleanCode === 'برمج' || cleanCode.toUpperCase() === 'BRAMAJ') {
+                    setAppliedCoupon(cleanCode);
+                    setDiscountError('');
+                    setDiscountSuccess(isAr ? 'تم تطبيق كود (برمج) خصم ٥٪ بنجاح! 🎉' : 'Coupon applied, 5% Off! 🎉');
+                  } else if (cleanCode === '') {
+                    setDiscountError(isAr ? 'الرجاء كتابة كود الخصم' : 'Please input code');
+                  } else {
+                    setDiscountError(isAr ? 'كود الخصم غير فعال أو خاطئ' : 'Invalid coupon code');
+                  }
+                }}
+                className="text-xs font-black text-white bg-gray-950 hover:bg-black px-4 py-2 rounded-xl transition-all cursor-pointer whitespace-nowrap"
+              >
+                {isAr ? 'تطبيق' : 'Apply'}
+              </button>
             )}
           </div>
+          {discountError && (
+            <p className="text-[10px] text-rose-500 font-bold mt-1 text-right">{discountError}</p>
+          )}
+          {discountSuccess && (
+            <p className="text-[10px] text-emerald-600 font-bold mt-1.5 flex items-center justify-start gap-1">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full shrink-0" />
+              {discountSuccess}
+            </p>
+          )}
+        </div>
+
+        {/* Total Cost Display Badge */}
+        <div className="bg-gray-50 border border-gray-100 rounded-2xl p-5 mb-6 shadow-sm" id="total-summary-card">
+          <div className={`flex justify-between items-center ${isAr ? 'flex-row' : 'flex-row-reverse'}`}>
+            <div className={isAr ? 'text-right' : 'text-left'}>
+              <span className="text-xs font-extrabold text-gray-400 uppercase tracking-wider">{trans.total_cost_lbl}</span>
+              <p className="text-[10px] text-gray-550 mt-1 flex items-center gap-1.5 font-bold">
+                <ShieldCheck className="w-3.5 h-3.5 shrink-0 text-emerald-500" />
+                {trans.safe_redirect}
+              </p>
+            </div>
+            <div className={`flex flex-col ${isAr ? 'text-left items-end' : 'text-right items-start'}`} id="total-price-badge">
+              <div>
+                <span className="text-4xl font-black text-black">{totalPrice}</span>
+                <span className="text-xs font-bold text-gray-400 ml-1 uppercase">{trans.sar}</span>
+              </div>
+              {cartItems.some(item => item.product.priceText) && (
+                <span className="text-[10px] text-gray-500 font-bold mt-1 block leading-tight">{trans.whatsapp_quote_notice}</span>
+              )}
+            </div>
+          </div>
+
+          {appliedCoupon && (
+            <div className={`border-t border-gray-200/50 mt-4 pt-3 flex items-center justify-between text-xs text-gray-500 ${isAr ? 'flex-row-reverse' : 'flex-row'}`}>
+              <span className="font-bold">{isAr ? 'السعر الأصلي:' : 'Original:'} {basePrice} {trans.sar}</span>
+              <span className="text-emerald-600 font-black">{isAr ? 'قيمة الخصم المستقطع:' : 'Discount Value:'} -{discountAmount} {trans.sar}</span>
+            </div>
+          )}
         </div>
 
         {/* Customer Information Checkout Form */}

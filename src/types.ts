@@ -55,4 +55,7 @@ export interface OrderDetails {
   totalPrice: number;
   generalNotes?: string;
   orderDate: string;
+  couponApplied?: string;
+  discountAmount?: number;
+  finalPriceAfterDiscount?: number;
 }
