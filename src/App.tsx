@@ -212,8 +212,16 @@ export default function App() {
   };
 
   return (
-    <div className={`min-h-screen flex flex-col bg-[#FAFAFA] text-gray-900 antialiased ${isAr ? 'font-sans' : 'font-sans'}`} id="main-app-shell">
+    <div className={`min-h-screen flex flex-col bg-[#FAFAFA] text-gray-900 antialiased relative overflow-x-hidden ${isAr ? 'font-sans' : 'font-sans'}`} id="main-app-shell">
       
+      {/* 
+        PREMIUM GLOWING AMBIENT WATERMARKS (Website Effects)
+        We place ultra-smooth, lightweight CSS circles with large blurs to elevate the visual backdrop.
+      */}
+      <div className="absolute top-[-10%] left-[-15%] w-[60vw] h-[60vw] max-w-[650px] bg-gradient-to-tr from-emerald-500/8 via-teal-400/4 to-transparent rounded-full blur-[140px] pointer-events-none z-0" />
+      <div className="absolute top-[25%] right-[-10%] w-[50vw] h-[50vw] max-w-[550px] bg-gradient-to-bl from-indigo-500/8 via-purple-400/3 to-transparent rounded-full blur-[120px] pointer-events-none z-0 animate-pulse" style={{ animationDuration: '12s' }} />
+      <div className="absolute bottom-[10%] left-[-5%] w-[45vw] h-[45vw] max-w-[500px] bg-gradient-to-tr from-blue-400/5 via-cyan-400/3 to-transparent rounded-full blur-[110px] pointer-events-none z-0" />
+
       {/* 
         ELITE FLOATING IPHONE DYNAMIC ISLAND 
         Designed purely as a fixed element overlay so that its appearance is completely 
@@ -225,42 +233,60 @@ export default function App() {
             key="dynamic-island"
             id="dynamic-island-navbar"
             layout
-            initial={{ y: -40, x: '-50%', scale: 0.9, opacity: 0 }}
+            initial={{ y: -50, x: '-50%', scale: 0.8, opacity: 0 }}
             animate={islandExpanded ? {
               y: 0,
               x: '-50%',
               scale: 1,
               opacity: 1,
-              width: '210px',
-              height: '44px',
-              borderRadius: '22px'
+              width: '240px',
+              height: '46px',
+              borderRadius: '23px',
+              backgroundColor: '#050505',
+              boxShadow: '0 20px 50px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.08)'
             } : {
               y: 0,
               x: '-50%',
               scale: 1,
               opacity: 1,
-              width: '130px',
+              width: '135px',
               height: '40px',
-              borderRadius: '20px'
+              borderRadius: '20px',
+              backgroundColor: '#000000',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05)'
             }}
-            exit={{ y: -40, x: '-50%', scale: 0.9, opacity: 0 }}
+            exit={{ y: -50, x: '-50%', scale: 0.8, opacity: 0 }}
+            whileHover={{ 
+              scale: 1.05, 
+              y: -1,
+              boxShadow: islandExpanded 
+                ? '0 25px 55px rgba(0,0,0,0.7), 0 0 0 1.5px rgba(255,255,255,0.12)' 
+                : '0 15px 45px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(255,255,255,0.1)'
+            }}
+            whileTap={{ scale: 0.96, y: 1 }}
             transition={{ 
               type: 'spring', 
-              stiffness: 400, 
-              damping: 28,
-              layout: { duration: 0.25, type: 'spring', stiffness: 350, damping: 25 }
+              stiffness: 280, 
+              damping: 20, 
+              mass: 0.75,
+              layout: { 
+                type: 'spring', 
+                stiffness: 230, 
+                damping: 17, 
+                mass: 0.7
+              }
             }}
-            className="fixed top-3 left-1/2 z-50 bg-[#000000] text-white shadow-[0_12px_45px_rgba(0,0,0,0.55)] flex items-center justify-between border border-white/10 overflow-hidden cursor-pointer select-none"
+            className="fixed top-3 left-1/2 z-50 text-white flex items-center justify-between overflow-hidden cursor-pointer select-none transition-shadow duration-300"
             onClick={() => setIslandExpanded(!islandExpanded)}
           >
             {/* If Island is NOT expanded (Default micro Dynamic Island state resembling Apple's capsule) */}
             {!islandExpanded && (
               <motion.div 
                 className="w-full h-full flex items-center justify-between px-3.5"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.15 }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
               >
                 {/* Shopping bag visual trigger indicator */}
                 <button
@@ -268,20 +294,20 @@ export default function App() {
                     e.stopPropagation();
                     setIsCartOpen(true);
                   }}
-                  className="relative flex items-center justify-center p-1 rounded-full text-white cursor-pointer hover:bg-white/5"
+                  className="relative flex items-center justify-center p-1.5 rounded-full text-white cursor-pointer hover:bg-white/10 active:scale-90 transition-all"
                 >
                   <ShoppingBag className="w-3.5 h-3.5 text-gray-200" />
                   {totalCartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[8px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-black">
+                    <span className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[8px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-black shadow-sm ring-1 ring-black">
                       {totalCartCount}
                     </span>
                   )}
                 </button>
  
-                {/* iPhone trademark active camera/recording indicators (Green camera dot + Orange mic dot) */}
-                <div className="flex items-center gap-1 shrink-0">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" title="Camera" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0" title="Mic" />
+                {/* iPhone trademark active camera/recording indicators (Green camera dot + Orange mic dot with premium pulsing animations) */}
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-[pulse_1.5s_infinite]" title="Camera" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 animate-[pulse_2s_infinite]" title="Mic" />
                 </div>
               </motion.div>
             )}
@@ -290,10 +316,10 @@ export default function App() {
             {islandExpanded && (
               <motion.div 
                 className="w-full h-full flex items-center justify-center px-2"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.15 }}
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.18, ease: 'easeOut' }}
               >
                 <button
                   onClick={(e) => {
@@ -301,10 +327,10 @@ export default function App() {
                     setIsCartOpen(true);
                     setIslandExpanded(false);
                   }}
-                  className="w-full h-full flex items-center justify-center gap-2 text-[11px] font-black hover:bg-white/5 active:scale-95 transition-all cursor-pointer"
+                  className="w-full h-full flex items-center justify-center gap-2 text-[11px] font-black hover:bg-white/10 active:scale-95 transition-all cursor-pointer text-gray-100 hover:text-white"
                 >
-                  <ShoppingBag className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{isAr ? `فتح السلة (${totalCartCount})` : `Open Basket (${totalCartCount})`}</span>
+                  <ShoppingBag className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
+                  <span className="tracking-tight">{isAr ? `فتح السلة (${totalCartCount})` : `Open Basket (${totalCartCount})`}</span>
                 </button>
               </motion.div>
             )}

@@ -18,7 +18,9 @@ import {
   Layers, 
   Award, 
   Sparkles, 
-  Settings
+  Settings,
+  HelpCircle,
+  Smartphone
 } from 'lucide-react';
 import { Product, CartItem } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
@@ -78,6 +80,8 @@ export function ProductCard({ product, onAddToCart, lang }: ProductCardProps) {
       case 'Building2': return <Building2 className="w-5 h-5 text-orange-500" />;
       case 'Layers': return <Layers className="w-5 h-5 text-emerald-400" />;
       case 'Award': return <Award className="w-5 h-5 text-amber-400" />;
+      case 'HelpCircle': return <HelpCircle className="w-5 h-5 text-indigo-400" />;
+      case 'Smartphone': return <Smartphone className="w-5 h-5 text-violet-400 animate-pulse" />;
       default: return <Sparkles className="w-5 h-5 text-indigo-400" />;
     }
   };

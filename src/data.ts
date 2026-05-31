@@ -452,8 +452,164 @@ export const productsList: Product[] = [
       }
     ]
   },
+  {
+    id: 'programming-consultation',
+    name: 'الاستشارة البرمجية',
+    nameAr: 'الاستشارة البرمجية',
+    nameEn: 'Programming Consultation',
+    type: 'programming',
+    price: 0,
+    priceText: 'مجاناً',
+    priceTextAr: 'مجاناً',
+    priceTextEn: 'Free',
+    description: 'جلسة استشارية برمجية لمراجعة فكرة مشروعك، واختيار التقنيات الأنسب للنمو.',
+    descriptionAr: 'جلسة استشارية برمجية لمراجعة فكرة مشروعك، واختيار التقنيات الأنسب للنمو.',
+    descriptionEn: 'A free technical advisory session to review your app details and tech stacks.',
+    icon: 'HelpCircle',
+    features: [
+      'تحليل فكرة تطبيقك أو موقعك الإلكتروني لضمان نجاحه',
+      'توجيه ونصح بشأن التقنيات ولغات البرمجة المناسبة لميزانيتك',
+      'توفير خطة عمل أولية وتوزيع للمهام مجاناً بالكامل'
+    ],
+    featuresAr: [
+      'تحليل فكرة تطبيقك أو موقعك الإلكتروني لضمان نجاحه',
+      'توجيه ونصح بشأن التقنيات ولغات البرمجة المناسبة لميزانيتك',
+      'توفير خطة عمل أولية وتوزيع للمهام مجاناً بالكامل'
+    ],
+    featuresEn: [
+      'Analyze your website or application idea to refine success odds',
+      'Expert advisory regarding optimal tech stack matching budget',
+      'Initial roadmap blueprint and milestones setup completely free'
+    ],
+    customFields: [
+      {
+        label: 'تفاصيل الاستشارة أو فكرة تطبيقك',
+        labelAr: 'تفاصيل الاستشارة أو فكرة تطبيقك',
+        labelEn: 'Consultation Brief / App Idea',
+        placeholder: 'اكتب تفاصيل النظام أو الاستفسار البرمجي لخدمتك بشكل دقيق...',
+        placeholderAr: 'اكتب تفاصيل النظام أو الاستفسار البرمجي لخدمتك بشكل دقيق...',
+        placeholderEn: 'Describe what you plan to build or your technical question...',
+        type: 'textarea'
+      }
+    ]
+  },
+  {
+    id: 'iphone-game-programming',
+    name: 'برمجة لعبه للايفون',
+    nameAr: 'برمجة لعبه للايفون',
+    nameEn: 'iPhone Game Programming',
+    type: 'programming',
+    price: 250,
+    description: 'تطوير وبرمجة الألعاب الخاصة بنظام iOS ونشرها على متجر آب ستور.',
+    descriptionAr: 'تطوير وبرمجة الألعاب الخاصة بنظام iOS ونشرها على متجر آب ستور.',
+    descriptionEn: 'Full development and deployment of customized mobile games on the Apple App Store for iOS devices.',
+    icon: 'Smartphone',
+    features: [
+      'تصميم وبرمجة واجهات فنية متميزة ومحايدة',
+      'توفير تجربة لعب تفاعلية متكاملة وسلسة للسرعة',
+      'المساعدة في النشر والمراجعة الرسمية على App Store'
+    ],
+    featuresAr: [
+      'تصميم وبرمجة واجهات فنية متميزة ومحايدة',
+      'توفير تجربة لعب تفاعلية متكاملة وسلسة للسرعة',
+      'المساعدة في النشر والمراجعة الرسمية على App Store'
+    ],
+    featuresEn: [
+      'Custom graphics designs and premium mechanics',
+      'Ultra smooth gameplay experience optimized for Apple chips',
+      'Comprehensive assistance during App Store publishing review'
+    ],
+    customFields: [
+      {
+        label: 'فكرة اللعبة وآلياتها المطلوبة',
+        labelAr: 'فكرة اللعبة وآلياتها المطلوبة',
+        labelEn: 'Game Idea & Core Mechanics',
+        placeholder: 'اكتب فكرة اللعبة، ونوع التحكم، والمكسب المفضل...',
+        placeholderAr: 'اكتب فكرة اللعبة، ونوع التحكم، والمكسب المفضل...',
+        placeholderEn: 'Describe custom game rules, visual mechanics, scoring style...',
+        type: 'textarea'
+      }
+    ]
+  },
+  {
+    id: 'android-game-programming',
+    name: 'برمجة لعبه للاندرويد',
+    nameAr: 'برمجة لعبه للاندرويد',
+    nameEn: 'Android Game Programming',
+    type: 'programming',
+    price: 200,
+    description: 'تصميم وتطوير الألعاب المتكاملة لنظام أندرويد ورفعها على متجر قوقل بلاي.',
+    descriptionAr: 'تصميم وتطوير الألعاب المتكاملة لنظام أندرويد ورفعها على متجر قوقل بلاي.',
+    descriptionEn: 'Full development and delivery of customized interactive mobile games on Google Play for Android devices.',
+    icon: 'Smartphone',
+    features: [
+      'برمجة وتحسين الأداء لتتوافق مع مختلف شاشات الأندرويد',
+      'إتاحة خيارات اللعب أوفلاين وسحابة التخزين',
+      'مساعدتك التامة في الإطلاق على متجر Google Play'
+    ],
+    featuresAr: [
+      'برمجة وتحسين الأداء لتتوافق مع مختلف شاشات الأندرويد',
+      'إتاحة خيارات اللعب أوفلاين وسحابة التخزين',
+      'مساعدتك التامة في الإطلاق على متجر Google Play'
+    ],
+    featuresEn: [
+      'Responsive multi-device testing for major Android brands',
+      'Offline-first responsive mechanisms with secure clouds',
+      'Guided setup and packaging launch on Google Play Console'
+    ],
+    customFields: [
+      {
+        label: 'تفاصيل اللعبة والرسومات',
+        labelAr: 'تفاصيل اللعبة والرسومات',
+        labelEn: 'Game Mechanics & Visual Theme',
+        placeholder: 'اكتب متطلبات اللعبة من فكر وقصة الرسوم المألوفة...',
+        placeholderAr: 'اكتب متطلبات اللعبة من فكر وقصة الرسوم المألوفة...',
+        placeholderEn: 'Describe your game ideas, levels, and desired art style...',
+        type: 'textarea'
+      }
+    ]
+  },
 
   // --- BUNDLES / PACKAGES ---
+  {
+    id: 'package-game-bundle',
+    name: 'بكج برمجة لعبه للايفون و الاندرويد',
+    nameAr: 'بكج برمجة لعبه للايفون و الاندرويد',
+    nameEn: 'iPhone & Android Game Package',
+    type: 'programming',
+    price: 399,
+    isPackage: true,
+    description: 'الباقة المتكاملة: برمجة وتطوير لعبتك لتعمل بنجاح فائق على نظامي iOS وأندرويد معاً وبخصم كبير.',
+    descriptionAr: 'الباقة المتكاملة: برمجة وتطوير لعبتك لتعمل بنجاح فائق على نظامي iOS وأندرويد معاً وبخصم كبير.',
+    descriptionEn: 'The absolute package: design and program your mobile game for both iPhone and Android platforms with maximum cost saving.',
+    icon: 'Smartphone',
+    features: [
+      'برمجة اللعبة من الصفر لتعمل على نظامي آيفون وأندرويد',
+      'تصميم واجهات ورسومات احترافية متوافقة مع الأجهزة',
+      'دعم كامل في رفع اللعبة لكلا المتجرين App Store و Play Store'
+    ],
+    featuresAr: [
+      'برمجة اللعبة من الصفر لتعمل على نظامي آيفون وأندرويد',
+      'تصميم واجهات ورسومات احترافية متوافقة مع الأجهزة',
+      'دعم كامل في رفع اللعبة لكلا المتجرين App Store و Play Store'
+    ],
+    featuresEn: [
+      'Coded once for fluid cross-platform execution on iOS and Android',
+      'Sleek modern user interface with native resolution assets',
+      'Comprehensive preparation and packaging for both app stores'
+    ],
+    customFields: [
+      {
+        label: 'اسم اللعبة وتفاصيل الفكرة العامة',
+        labelAr: 'اسم اللعبة وتفاصيل الفكرة العامة',
+        labelEn: 'Game Name & Concept Details',
+        placeholder: 'اكتب اسم اللعبة ورؤيتك للتصميم والأدوار...',
+        placeholderAr: 'اكتب اسم اللعبة ورؤيتك للتصميم والأدوار...',
+        placeholderEn: 'Describe custom game levels, rules and aesthetic directions...',
+        type: 'textarea'
+      }
+    ]
+  },
   {
     id: 'package-corporate',
     name: 'باقة الشركات (شعار + موقع + بروفايل)',
