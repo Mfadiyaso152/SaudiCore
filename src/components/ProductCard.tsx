@@ -144,6 +144,9 @@ export function ProductCard({ product, onAddToCart, lang }: ProductCardProps) {
     ? 'bg-gray-950 hover:bg-black text-white'
     : 'bg-white hover:bg-gray-100 text-black';
 
+  // Unique stable duration for organic asynchronous movement
+  const floatDuration = (product.id.charCodeAt(product.id.length - 1) % 3) + 5;
+
   return (
     <motion.div
       id={`product-card-${product.id}`}
@@ -155,11 +158,12 @@ export function ProductCard({ product, onAddToCart, lang }: ProductCardProps) {
         rotate: [0, 2, -2, 0],
         y: 0
       } : isHovered ? {
-        y: -6,
-        scale: 1.03,
+        y: -5,
+        scale: 1.02,
         rotate: 0,
       } : {
-        y: 0,
+        // Floating only applies when the card is unexpanded to prevent jitter during text input typing
+        y: isExpanded ? 0 : [0, -3, 0],
         scale: 1,
         rotate: 0
       }}
@@ -167,10 +171,16 @@ export function ProductCard({ product, onAddToCart, lang }: ProductCardProps) {
         scale: { duration: 0.5, ease: 'easeInOut' },
         rotate: { duration: 0.5, ease: 'easeInOut' },
         y: { type: 'spring', stiffness: 300, damping: 20 }
-      } : {
+      } : isHovered ? {
         type: 'spring',
         stiffness: 260,
         damping: 22
+      } : {
+        y: {
+          duration: floatDuration,
+          repeat: Infinity,
+          ease: 'easeInOut'
+        }
       }}
       className={`relative flex flex-col justify-between overflow-hidden border transition-all ${containerClass} ${
         isExpanded 
