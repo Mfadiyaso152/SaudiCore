@@ -453,47 +453,6 @@ export const productsList: Product[] = [
     ]
   },
   {
-    id: 'programming-consultation',
-    name: 'الاستشارة البرمجية',
-    nameAr: 'الاستشارة البرمجية',
-    nameEn: 'Programming Consultation',
-    type: 'programming',
-    price: 0,
-    priceText: 'مجاناً',
-    priceTextAr: 'مجاناً',
-    priceTextEn: 'Free',
-    description: 'جلسة استشارية برمجية لمراجعة فكرة مشروعك، واختيار التقنيات الأنسب للنمو.',
-    descriptionAr: 'جلسة استشارية برمجية لمراجعة فكرة مشروعك، واختيار التقنيات الأنسب للنمو.',
-    descriptionEn: 'A free technical advisory session to review your app details and tech stacks.',
-    icon: 'HelpCircle',
-    features: [
-      'تحليل فكرة تطبيقك أو موقعك الإلكتروني لضمان نجاحه',
-      'توجيه ونصح بشأن التقنيات ولغات البرمجة المناسبة لميزانيتك',
-      'توفير خطة عمل أولية وتوزيع للمهام مجاناً بالكامل'
-    ],
-    featuresAr: [
-      'تحليل فكرة تطبيقك أو موقعك الإلكتروني لضمان نجاحه',
-      'توجيه ونصح بشأن التقنيات ولغات البرمجة المناسبة لميزانيتك',
-      'توفير خطة عمل أولية وتوزيع للمهام مجاناً بالكامل'
-    ],
-    featuresEn: [
-      'Analyze your website or application idea to refine success odds',
-      'Expert advisory regarding optimal tech stack matching budget',
-      'Initial roadmap blueprint and milestones setup completely free'
-    ],
-    customFields: [
-      {
-        label: 'تفاصيل الاستشارة أو فكرة تطبيقك',
-        labelAr: 'تفاصيل الاستشارة أو فكرة تطبيقك',
-        labelEn: 'Consultation Brief / App Idea',
-        placeholder: 'اكتب تفاصيل النظام أو الاستفسار البرمجي لخدمتك بشكل دقيق...',
-        placeholderAr: 'اكتب تفاصيل النظام أو الاستفسار البرمجي لخدمتك بشكل دقيق...',
-        placeholderEn: 'Describe what you plan to build or your technical question...',
-        type: 'textarea'
-      }
-    ]
-  },
-  {
     id: 'iphone-game-programming',
     name: 'برمجة لعبه للايفون',
     nameAr: 'برمجة لعبه للايفون',

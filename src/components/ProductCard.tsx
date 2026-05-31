@@ -155,32 +155,22 @@ export function ProductCard({ product, onAddToCart, lang }: ProductCardProps) {
         rotate: [0, 2, -2, 0],
         y: 0
       } : isHovered ? {
-        y: -10,
+        y: -6,
         scale: 1.03,
         rotate: 0,
       } : {
-        y: [0, -6, 0, 6, 0],
-        rotate: [0, 0.4, 0, -0.4, 0]
+        y: 0,
+        scale: 1,
+        rotate: 0
       }}
       transition={isApplePaySuccess ? {
         scale: { duration: 0.5, ease: 'easeInOut' },
         rotate: { duration: 0.5, ease: 'easeInOut' },
         y: { type: 'spring', stiffness: 300, damping: 20 }
-      } : isHovered ? {
-        type: 'spring',
-        stiffness: 300,
-        damping: 20
       } : {
-        y: {
-          duration: 4 + Math.random() * 3, // out-of-sync bouncy float
-          repeat: Infinity,
-          ease: 'easeInOut'
-        },
-        rotate: {
-          duration: 6 + Math.random() * 4,
-          repeat: Infinity,
-          ease: 'easeInOut'
-        }
+        type: 'spring',
+        stiffness: 260,
+        damping: 22
       }}
       className={`relative flex flex-col justify-between overflow-hidden border transition-all ${containerClass} ${
         isExpanded 
