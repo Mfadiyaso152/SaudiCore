@@ -528,47 +528,122 @@ export const productsList: Product[] = [
       }
     ]
   },
-
-  // --- BUNDLES / PACKAGES ---
   {
-    id: 'package-game-bundle',
-    name: 'بكج برمجة لعبه للايفون و الاندرويد',
-    nameAr: 'بكج برمجة لعبه للايفون و الاندرويد',
-    nameEn: 'iPhone & Android Game Package',
+    id: 'online-game-programming',
+    name: 'برمجة لعبه اونلاين',
+    nameAr: 'برمجة لعبه اونلاين',
+    nameEn: 'Online Game Programming',
     type: 'programming',
-    price: 399,
-    isPackage: true,
-    description: 'الباقة المتكاملة: برمجة وتطوير لعبتك لتعمل بنجاح فائق على نظامي iOS وأندرويد معاً وبخصم كبير.',
-    descriptionAr: 'الباقة المتكاملة: برمجة وتطوير لعبتك لتعمل بنجاح فائق على نظامي iOS وأندرويد معاً وبخصم كبير.',
-    descriptionEn: 'The absolute package: design and program your mobile game for both iPhone and Android platforms with maximum cost saving.',
-    icon: 'Smartphone',
+    price: 550,
+    description: 'برمجة وتطوير لعبة جماعية أونلاين بمميزات تفاعلية متطورة وسيرفر متزامن.',
+    descriptionAr: 'برمجة وتطوير لعبة جماعية أونلاين بمميزات تفاعلية متطورة وسيرفر متزامن.',
+    descriptionEn: 'Coded multiplayer online game design with fast real-time synchronization servers.',
+    icon: 'Gamepad2',
     features: [
-      'برمجة اللعبة من الصفر لتعمل على نظامي آيفون وأندرويد',
-      'تصميم واجهات ورسومات احترافية متوافقة مع الأجهزة',
-      'دعم كامل في رفع اللعبة لكلا المتجرين App Store و Play Store'
+      'دعم اللعب الجماعي المتزامن أونلاين',
+      'ربط بقاعة بيانات وسيرفر مخصص متكامل للنتائج',
+      'تجربة لعب ممتعة وسلسة مع حماية فائقة'
     ],
     featuresAr: [
-      'برمجة اللعبة من الصفر لتعمل على نظامي آيفون وأندرويد',
-      'تصميم واجهات ورسومات احترافية متوافقة مع الأجهزة',
-      'دعم كامل في رفع اللعبة لكلا المتجرين App Store و Play Store'
+      'دعم اللعب الجماعي المتزامن أونلاين',
+      'ربط بقاعة بيانات وسيرفر مخصص متكامل للنتائج',
+      'تجربة لعب ممتعة وسلسة مع حماية فائقة'
     ],
     featuresEn: [
-      'Coded once for fluid cross-platform execution on iOS and Android',
-      'Sleek modern user interface with native resolution assets',
-      'Comprehensive preparation and packaging for both app stores'
+      'Multiplayer real-time online gameplay support',
+      'Custom database and server synchronization for highscores',
+      'Immersive user interfaces, fluid mechanics and cybersec'
     ],
     customFields: [
       {
-        label: 'اسم اللعبة وتفاصيل الفكرة العامة',
-        labelAr: 'اسم اللعبة وتفاصيل الفكرة العامة',
-        labelEn: 'Game Name & Concept Details',
-        placeholder: 'اكتب اسم اللعبة ورؤيتك للتصميم والأدوار...',
-        placeholderAr: 'اكتب اسم اللعبة ورؤيتك للتصميم والأدوار...',
-        placeholderEn: 'Describe custom game levels, rules and aesthetic directions...',
+        label: 'تفاصيل اللعبة واللاعبين ونظام الأونلاين',
+        labelAr: 'تفاصيل اللعبة واللاعبين ونظام الأونلاين',
+        labelEn: 'Game Rules & Multiplayer Scope',
+        placeholder: 'اكتب فكرة اللعبة، وعدد اللاعبين المأمول، وطريقة الربح...',
+        placeholderAr: 'اكتب فكرة اللعبة، وعدد اللاعبين المأمول، وطريقة الربح...',
+        placeholderEn: 'Describe game, player count, matches style, monetizations...',
         type: 'textarea'
       }
     ]
   },
+  {
+    id: 'server-integration',
+    name: 'ربط موقعك بسيرفر',
+    nameAr: 'ربط موقعك بسيرفر',
+    nameEn: 'Server-to-Website Integration',
+    type: 'programming',
+    price: 400,
+    description: 'ربط موقع كودك بقواعد بيانات خلفية وسيرفر سحابي مخصص لإدارة العمليات.',
+    descriptionAr: 'ربط موقع كودك بقواعد بيانات خلفية وسيرفر سحابي مخصص لإدارة العمليات.',
+    descriptionEn: 'Bridges static codes with secure backend databases or APIs on remote instances.',
+    icon: 'Link',
+    features: [
+      'إعداد سيرفر خلفي آمن وسريع (API / Express)',
+      'ربط بقواعد البيانات (MongoDB / PostgreSQL) وسرعة الاستجابة',
+      'حماية المدخلات والتشفير الكامل للبيانات والمستخدمين'
+    ],
+    featuresAr: [
+      'إعداد سيرفر خلفي آمن وسريع (API / Express)',
+      'ربط بقواعد البيانات (MongoDB / PostgreSQL) وسرعة الاستجابة',
+      'حماية المدخلات والتشفير الكامل للبيانات والمستخدمين'
+    ],
+    featuresEn: [
+      'Secure and fast REST/GraphQL application setups',
+      'Reliability with professional structural database engines (PostgreSQL / MongoDB)',
+      'Full traffic encryption and authentication logic patterns'
+    ],
+    customFields: [
+      {
+        label: 'تفاصيل السيرفر ونوع قاعدة البيانات',
+        labelAr: 'تفاصيل السيرفر ونوع قاعدة البيانات',
+        labelEn: 'Backend Framework & Database Wishes',
+        placeholder: 'اكتب الوظيفة المرغوبة: تخزين مستخدمين، لوحة تحكم، نظام دفع...',
+        placeholderAr: 'اكتب الوظيفة المرغوبة: تخزين مستخدمين، لوحة تحكم، نظام دفع...',
+        placeholderEn: 'Define desired backend roles: user storage, logic engines, payments...',
+        type: 'textarea'
+      }
+    ]
+  },
+  {
+    id: 'publish-appstore-yearly',
+    name: 'نشر الموقع على الويب وتطبيق آبل ستور شامل الاشتراك لمدة سنة',
+    nameAr: 'نشر الموقع على ابل ستور شامل الاشتراك لمدة سنه',
+    nameEn: 'Publish on App Store (with 1-year sub)',
+    type: 'programming',
+    price: 600,
+    description: 'رفع وإتاحة موقعك كتطبيق تفاعلي بمتجر App Store شامل حساب المطور واشتراكه لمدة عام.',
+    descriptionAr: 'رفع وإتاحة موقعك كتطبيق تفاعلي بمتجر App Store شامل حساب المطور واشتراكه لمدة عام.',
+    descriptionEn: 'Deploy your interactive web portal as native-wrapper on Apple App Store including one full year developer license.',
+    icon: 'Apple',
+    features: [
+      'تجهيز الكود كلياً متناسق لدقة شاشات الآيفون والآيباد',
+      'تأمين حساب مطور أبل ساري ومسدد لاشتراك العام بالكامل بقيمة ٩٩ دولار',
+      'إشراف كامل على تقديم المراجعة حتى الحصول على القبول النهائي ونشره بالمتجر'
+    ],
+    featuresAr: [
+      'تجهيز الكود كلياً متناسق لدقة شاشات الآيفون والآيباد',
+      'تأمين حساب مطور أبل ساري ومسدد لاشتراك العام بالكامل بقيمة ٩٩ دولار',
+      'إشراف كامل على تقديم المراجعة حتى الحصول على القبول النهائي ونشره بالمتجر'
+    ],
+    featuresEn: [
+      'Sleek adaptive setups tailored in Apple app packages',
+      'Fully active individual developer account for 1 entire year ($99 Apple fee covered)',
+      'Hand-on reviews assistance representing compliance checklist to secure store approval'
+    ],
+    customFields: [
+      {
+        label: 'رابط الموقع أو معلومات التطبيق',
+        labelAr: 'رابط الموقع أو معلومات التطبيق',
+        labelEn: 'Website Link / App Info',
+        placeholder: 'اكتب رابط موقعك أو فكرته والاسم المقترح للتطبيق...',
+        placeholderAr: 'اكتب رابط موقعك أو فكرته والاسم المقترح للتطبيق...',
+        placeholderEn: 'Your website URL or main app details...',
+        type: 'textarea'
+      }
+    ]
+  },
+
+  // --- BUNDLES / PACKAGES ---
   {
     id: 'package-corporate',
     name: 'باقة الشركات (شعار + موقع + بروفايل)',

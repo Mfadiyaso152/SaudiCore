@@ -24,6 +24,11 @@ export function buildWhatsAppMessage(orderDetails: OrderDetails, lang: 'ar' | 'e
       const name = item.product.nameAr || item.product.name;
       message += `- ${name}\n`;
       
+      // Add custom requirements (description of the idea)
+      if (item.customRequirements && item.customRequirements.trim()) {
+        message += `  * وصف الفكرة: ${item.customRequirements.trim()}\n`;
+      }
+      
       // Add custom questions answers if filled
       const customFieldEntries = Object.entries(item.selectedFields);
       if (customFieldEntries.length > 0) {
@@ -55,6 +60,11 @@ export function buildWhatsAppMessage(orderDetails: OrderDetails, lang: 'ar' | 'e
     orderDetails.items.forEach((item) => {
       const name = item.product.nameEn || item.product.name;
       message += `- ${name}\n`;
+      
+      // Add custom requirements (description of the idea)
+      if (item.customRequirements && item.customRequirements.trim()) {
+        message += `  * Idea Description: ${item.customRequirements.trim()}\n`;
+      }
       
       const customFieldEntries = Object.entries(item.selectedFields);
       if (customFieldEntries.length > 0) {

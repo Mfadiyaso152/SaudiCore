@@ -20,7 +20,10 @@ import {
   Sparkles, 
   Settings,
   HelpCircle,
-  Smartphone
+  Smartphone,
+  Gamepad2,
+  Link,
+  Apple
 } from 'lucide-react';
 import { Product, CartItem } from '../types';
 import { motion, AnimatePresence } from 'motion/react';
@@ -82,6 +85,9 @@ export function ProductCard({ product, onAddToCart, lang }: ProductCardProps) {
       case 'Award': return <Award className="w-5 h-5 text-amber-400" />;
       case 'HelpCircle': return <HelpCircle className="w-5 h-5 text-indigo-400" />;
       case 'Smartphone': return <Smartphone className="w-5 h-5 text-violet-400 animate-pulse" />;
+      case 'Gamepad2': return <Gamepad2 className="w-5 h-5 text-rose-400" />;
+      case 'Link': return <Link className="w-5 h-5 text-teal-400" />;
+      case 'Apple': return <Apple className="w-5 h-5 text-gray-800" />;
       default: return <Sparkles className="w-5 h-5 text-indigo-400" />;
     }
   };

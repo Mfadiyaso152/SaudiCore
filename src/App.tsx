@@ -21,11 +21,10 @@ export default function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [lang, setLang] = useState<'ar' | 'en'>('ar');
-  const [islandExpanded, setIslandExpanded] = useState(false);
 
   const isAr = lang === 'ar';
 
-  // Throttled high-performance scroll handling that doesn't cause recursive re-renders or freezes
+  // Throttled scroll handling
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
@@ -36,8 +35,6 @@ export default function App() {
           } else {
             setIsScrolled(false);
           }
-          // Compress the island smoothly when scrolled to adjust perfectly to mob/desktop movement
-          setIslandExpanded(false);
           ticking = false;
         });
         ticking = true;
@@ -106,6 +103,19 @@ export default function App() {
     saveCart(updatedCart);
   };
 
+  const handleUpdateRequirements = (itemId: string, requirements: string) => {
+    const updatedCart = cart.map((item) => {
+      if (item.id === itemId) {
+        return {
+          ...item,
+          customRequirements: requirements,
+        };
+      }
+      return item;
+    });
+    saveCart(updatedCart);
+  };
+
   const handleClearCart = () => {
     saveCart([]);
   };
@@ -122,14 +132,14 @@ export default function App() {
   // Core Landing page translation dictionary
   const transDict = {
     ar: {
-      platformName: 'إرتقاء',
-      platformSub: 'للخدمات الرقمية',
+      platformName: 'SaudiCore',
+      platformSub: 'Digital Services',
       heroPill: 'تميز وجودة رقمية وتصاميم حديثة تنبض بالإبداع والابتكار',
       heroHeadlineStart: 'اصنع تواجدك الرقمي الفريد بـ ',
       heroHeadlineDesignUrl: 'تصاميم إبداعية',
       heroAnd: ' و ',
       heroHeadlineCodeUrl: 'برمجة متكاملة',
-      heroSubtext: 'منصة إرتقاء الرقمية تُمكّنك من الحصول على أفضل خدمات التصميم الاحترافي، وحلول البرمجة والنشر المتطورة بأسعار منافسة ومدروسة. حدد متطلباتك وسجل فكرتك ثم اطلب للتحول مباشرة للواتساب وبدء العمل فوراً.',
+      heroSubtext: 'SaudiCore تُمكّنك من الحصول على أفضل خدمات التصميم الاحترافي، وحلول البرمجة والنشر المتطورة بأسعار منافسة ومدروسة. حدد متطلباتك وسجل فكرتك ثم اطلب للتحول مباشرة للواتساب وبدء العمل فوراً.',
       heroCta: '🚀 استكشف معرض المنتجات واطلب الآن',
       benefit1Title: 'جودة فنية متقنة',
       benefit1Desc: 'نلتزم بالمعايير القياسية والواجهات المعاصرة.',
@@ -143,7 +153,7 @@ export default function App() {
       footerRights: 'حقوق الموقع محفوظة للمبرمج محمد © 2026',
       drawerTitle: 'سلة طلباتك المحددة',
       drawerSubTitle: 'خدمات إضافية بانتظارك',
-      optionsTitle: 'قائمة التحكم بالمنصة',
+      optionsTitle: 'قائمة التحكم بالأقسام',
       langTitle: 'أو اختر لغة العرض:',
       closeLabel: 'إغلاق',
       contactTitle: 'وسائل الاتصال المباشرة:',
@@ -152,14 +162,14 @@ export default function App() {
       email: 'البريد الإلكتروني'
     },
     en: {
-      platformName: 'Irteqa',
+      platformName: 'SaudiCore',
       platformSub: 'Digital Services',
       heroPill: 'Elite digital quality and ultra-modern designs bursting with innovation',
       heroHeadlineStart: 'Shape Your Unique Digital Footprint with ',
       heroHeadlineDesignUrl: 'Creative Designs',
       heroAnd: ' & ',
       heroHeadlineCodeUrl: 'Pristine Development',
-      heroSubtext: 'Irteqa Platform is your premier destination for professional graphic design, reliable software engineering, and search optimization services. Craft your ideal package, define custom fields, and route your order directly to WhatsApp in one tap.',
+      heroSubtext: 'SaudiCore is your premier destination for professional graphic design, reliable software engineering, and search optimization services. Craft your ideal package, define custom fields, and route your order directly to WhatsApp in one tap.',
       heroCta: '🚀 Browse Catalog & Get Started Now',
       benefit1Title: 'Premium Quality',
       benefit1Desc: 'We commit premium layouts matching international standards.',
@@ -223,178 +233,142 @@ export default function App() {
       <div className="absolute bottom-[10%] left-[-5%] w-[45vw] h-[45vw] max-w-[500px] bg-gradient-to-tr from-blue-400/5 via-cyan-400/3 to-transparent rounded-full blur-[110px] pointer-events-none z-0" />
 
       {/* 
-        ELITE FLOATING IPHONE DYNAMIC ISLAND 
-        Designed purely as a fixed element overlay so that its appearance is completely 
-        non-disruptive to the DOM flow, resolving scroll jitter and mouse lags instantly.
+        ELITE MORPHING NAVIGATION BAR / FLOATING IPHONE DYNAMIC ISLAND
+        Instead of the header disappearing, it physically shrinks and transitions 
+        smoothly into the premium Dynamic Island capsule pinned to the top of the body!
       */}
-      <AnimatePresence>
-        {isScrolled && (
-          <motion.div
-            key="dynamic-island"
-            id="dynamic-island-navbar"
-            layout
-            initial={{ y: -50, x: '-50%', scale: 0.8, opacity: 0 }}
-            animate={islandExpanded ? {
-              y: 0,
-              x: '-50%',
-              scale: 1,
-              opacity: 1,
-              width: '240px',
-              height: '46px',
-              borderRadius: '23px',
-              backgroundColor: '#050505',
-              boxShadow: '0 20px 50px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.08)'
-            } : {
-              y: 0,
-              x: '-50%',
-              scale: 1,
-              opacity: 1,
-              width: '135px',
-              height: '40px',
-              borderRadius: '20px',
-              backgroundColor: '#000000',
-              boxShadow: '0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05)'
-            }}
-            exit={{ y: -50, x: '-50%', scale: 0.8, opacity: 0 }}
-            whileHover={{ 
-              scale: 1.05, 
-              y: -1,
-              boxShadow: islandExpanded 
-                ? '0 25px 55px rgba(0,0,0,0.7), 0 0 0 1.5px rgba(255,255,255,0.12)' 
-                : '0 15px 45px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(255,255,255,0.1)'
-            }}
-            whileTap={{ scale: 0.96, y: 1 }}
-            transition={{ 
-              type: 'spring', 
-              stiffness: 280, 
-              damping: 20, 
-              mass: 0.75,
-              layout: { 
-                type: 'spring', 
-                stiffness: 230, 
-                damping: 17, 
-                mass: 0.7
-              }
-            }}
-            className="fixed top-3 left-1/2 z-50 text-white flex items-center justify-between overflow-hidden cursor-pointer select-none transition-shadow duration-300"
-            onClick={() => setIslandExpanded(!islandExpanded)}
-          >
-            {/* If Island is NOT expanded (Default micro Dynamic Island state resembling Apple's capsule) */}
-            {!islandExpanded && (
-              <motion.div 
-                className="w-full h-full flex items-center justify-between px-3.5"
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
+      <div className="h-20 w-full relative z-50 shrink-0" id="header-container-tracker">
+        <motion.header
+          id="main-navbar"
+          style={{ x: '-50%', left: '50%' }}
+          animate={isScrolled ? {
+            position: 'fixed',
+            left: '50%',
+            x: '-50%',
+            top: '12px',
+            width: '110px',
+            height: '42px',
+            borderRadius: '21px',
+            backgroundColor: '#000000',
+            boxShadow: '0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08)'
+          } : {
+            position: 'fixed',
+            left: '50%',
+            x: '-50%',
+            top: '0px',
+            width: '100%',
+            height: '80px',
+            borderRadius: '0px',
+            backgroundColor: 'rgba(255, 255, 255, 0.85)',
+            boxShadow: '0 1px 2px rgba(0,0,0,0.02)'
+          }}
+          whileHover={isScrolled ? { 
+            scale: 1.05,
+            y: -1,
+            boxShadow: '0 15px 45px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(255,255,255,0.1)'
+          } : undefined}
+          whileTap={isScrolled ? { scale: 0.95, y: 1 } : undefined}
+          transition={{ 
+            type: 'spring', 
+            stiffness: 220, 
+            damping: 28, 
+            mass: 0.85
+          }}
+          className={`fixed border-b flex items-center overflow-hidden cursor-pointer select-none transition-shadow duration-300 ${
+            isScrolled 
+              ? 'border-white/10 text-white z-50 justify-center' 
+              : 'border-gray-100 text-gray-900 z-50 justify-between'
+          }`}
+          onClick={() => {
+            if (isScrolled) {
+              setIsCartOpen(true);
+            }
+          }}
+        >
+          <AnimatePresence mode="wait">
+            {!isScrolled ? (
+              <motion.div
+                key="desktop-nav-content"
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
                 transition={{ duration: 0.18, ease: 'easeOut' }}
+                className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between"
               >
-                {/* Shopping bag visual trigger indicator */}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsCartOpen(true);
-                  }}
-                  className="relative flex items-center justify-center p-1.5 rounded-full text-white cursor-pointer hover:bg-white/10 active:scale-90 transition-all"
-                >
-                  <ShoppingBag className="w-3.5 h-3.5 text-gray-200" />
-                  {totalCartCount > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[8px] w-3.5 h-3.5 rounded-full flex items-center justify-center font-black shadow-sm ring-1 ring-black">
-                      {totalCartCount}
-                    </span>
-                  )}
-                </button>
- 
-                {/* iPhone trademark active camera/recording indicators (Green camera dot + Orange mic dot with premium pulsing animations) */}
-                <div className="flex items-center gap-1.5 shrink-0">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-[pulse_1.5s_infinite]" title="Camera" />
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 animate-[pulse_2s_infinite]" title="Mic" />
+                <div className={`w-full flex items-center justify-between ${isAr ? 'flex-row' : 'flex-row-reverse'}`}>
+                  
+                  {/* Logo & title brand markup */}
+                  <div className={`flex items-center gap-3 cursor-pointer ${isAr ? 'flex-row text-right' : 'flex-row-reverse text-left'}`} onClick={(e) => { e.stopPropagation(); scrollToSection('home-hero'); }}>
+                    <div className="w-10 h-10 bg-gray-950 rounded-xl flex items-center justify-center text-white border border-gray-800 shadow-sm shrink-0">
+                      <Sparkles className="w-5 h-5 text-gray-200" />
+                    </div>
+                    <div>
+                      <h1 className="text-lg md:text-xl font-black text-gray-950 tracking-tight leading-none">
+                        SaudiCore
+                      </h1>
+                      <p className="text-[9px] text-gray-400 font-extrabold mt-1 uppercase tracking-widest leading-none">{currentTrans.platformSub}</p>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-3">
+                    {/* Minimalist Language Switcher */}
+                    <button
+                      id="header-lang-switcher"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setLang(lang === 'ar' ? 'en' : 'ar');
+                      }}
+                      className="text-xs font-bold px-3 py-1.5 rounded-full border border-gray-150 hover:border-gray-300 transition-colors cursor-pointer text-gray-700 hover:text-black bg-white/50 backdrop-blur-sm"
+                    >
+                      {lang === 'ar' ? 'English' : 'العربية'}
+                    </button>
+
+                    <button
+                      id="header-cart-trigger"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsCartOpen(true);
+                      }}
+                      className="relative flex items-center justify-center bg-gray-950 hover:bg-black text-white w-10 h-10 rounded-full transition-all active:scale-95 cursor-pointer border border-gray-850 shadow-sm"
+                      title={isAr ? 'سلة الطلبات' : 'Cart view'}
+                    >
+                      <ShoppingBag className="w-4.5 h-4.5" />
+                      {totalCartCount > 0 ? (
+                        <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-extrabold shadow-md animate-pulse">
+                          {totalCartCount}
+                        </span>
+                      ) : (
+                        <span className="absolute -top-1 -right-1 bg-gray-200 text-gray-600 text-[8px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold border border-white">0</span>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="island-nav-content"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.15 }}
+                className="w-full h-full flex items-center justify-center"
+              >
+                <div className="relative flex items-center justify-center w-full h-full">
+                  <div className="relative flex items-center justify-center p-2 rounded-full text-white cursor-pointer hover:bg-white/10 active:scale-90 transition-all">
+                    <ShoppingBag className="w-5 h-5 text-gray-200" />
+                    {totalCartCount > 0 && (
+                      <span className="absolute -top-0.5 -right-0.5 bg-emerald-500 text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center font-black shadow-md ring-1 ring-black">
+                        {totalCartCount}
+                      </span>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             )}
- 
-            {/* If Island IS expanded (Expanded basket status state) */}
-            {islandExpanded && (
-              <motion.div 
-                className="w-full h-full flex items-center justify-center px-2"
-                initial={{ opacity: 0, scale: 0.92 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.92 }}
-                transition={{ duration: 0.18, ease: 'easeOut' }}
-              >
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setIsCartOpen(true);
-                    setIslandExpanded(false);
-                  }}
-                  className="w-full h-full flex items-center justify-center gap-2 text-[11px] font-black hover:bg-white/10 active:scale-95 transition-all cursor-pointer text-gray-100 hover:text-white"
-                >
-                  <ShoppingBag className="w-3.5 h-3.5 text-emerald-400 animate-bounce" />
-                  <span className="tracking-tight">{isAr ? `فتح السلة (${totalCartCount})` : `Open Basket (${totalCartCount})`}</span>
-                </button>
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Standard Desktop Header Navigation - Slides out of sight beautifully when Dynamic Island is active */}
-      <header 
-        className={`bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-40 transition-all duration-500 ease-in-out ${
-          isScrolled 
-            ? 'opacity-0 -translate-y-full pointer-events-none' 
-            : 'opacity-100 translate-y-0'
-        }`}
-        id="main-navbar"
-      >
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between ${isAr ? 'flex-row' : 'flex-row-reverse'}`}>
-          
-          {/* Logo & title brand markup */}
-          <div className={`flex items-center gap-3 cursor-pointer ${isAr ? 'flex-row text-right' : 'flex-row-reverse text-left'}`} onClick={() => scrollToSection('home-hero')}>
-            <div className="w-10 h-10 bg-gray-950 rounded-xl flex items-center justify-center text-white border border-gray-800 shadow-sm shrink-0">
-              <Sparkles className="w-5 h-5 text-gray-200" />
-            </div>
-            <div>
-              <h1 className="text-lg md:text-xl font-black text-gray-905 tracking-tight flex items-center gap-1 leading-none">
-                {isAr ? (
-                  <>منصّة <span className="text-gray-950 font-black">{currentTrans.platformName}</span></>
-                ) : (
-                  <><span className="text-gray-950 font-black">{currentTrans.platformName}</span> Platform</>
-                )}
-              </h1>
-              <p className="text-[9px] text-gray-400 font-extrabold mt-1 uppercase tracking-widest leading-none">{currentTrans.platformSub}</p>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex items-center gap-3">
-            {/* Minimalist Language Switcher */}
-            <button
-              id="header-lang-switcher"
-              onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
-              className="text-xs font-bold px-3 py-1.5 rounded-full border border-gray-150 hover:border-gray-300 transition-colors cursor-pointer text-gray-700 hover:text-black bg-white/50 backdrop-blur-sm"
-            >
-              {lang === 'ar' ? 'English' : 'العربية'}
-            </button>
-
-            <button
-              id="header-cart-trigger"
-              onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center justify-center bg-gray-950 hover:bg-black text-white w-10 h-10 rounded-full transition-all active:scale-95 cursor-pointer border border-gray-850 shadow-sm"
-              title={isAr ? 'سلة الطلبات' : 'Cart view'}
-            >
-              <ShoppingBag className="w-4.5 h-4.5" />
-              {totalCartCount > 0 ? (
-                <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-extrabold shadow-md animate-pulse">
-                  {totalCartCount}
-                </span>
-              ) : (
-                <span className="absolute -top-1 -right-1 bg-gray-200 text-gray-600 text-[8px] w-4.5 h-4.5 rounded-full flex items-center justify-center font-bold border border-white">0</span>
-              )}
-            </button>
-          </div>
-        </div>
-      </header>
+          </AnimatePresence>
+        </motion.header>
+      </div>
 
       {/* Main Container Layout */}
       <main className="flex-grow">
@@ -515,7 +489,7 @@ export default function App() {
           {/* Copyright description & Social media handles */}
           <div className={`text-center md:text-right space-y-2 ${isAr ? 'md:order-1' : 'md:order-3'}`}>
             <div>
-              <span className="text-[10px] text-gray-500 font-extrabold tracking-widest block uppercase font-mono">{lang === 'ar' ? 'منصة إرتقاء' : 'Irteqa Digital'}</span>
+              <span className="text-[10px] text-gray-500 font-extrabold tracking-widest block uppercase font-mono">SaudiCore Digital</span>
               <p className="text-xs font-bold text-gray-300">
                 {lang === 'ar' ? 'حقوق الموقع محفوظة للمبرمج محمد © 2026' : 'Created & Designed by Programmer Mohammed © 2026'}
               </p>
@@ -626,6 +600,7 @@ export default function App() {
                   cartItems={cart}
                   onRemoveItem={handleRemoveItem}
                   onUpdateQty={handleUpdateQty}
+                  onUpdateRequirements={handleUpdateRequirements}
                   onClearCart={handleClearCart}
                   lang={lang}
                 />

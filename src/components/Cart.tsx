@@ -8,11 +8,12 @@ interface CartProps {
   cartItems: CartItem[];
   onRemoveItem: (itemId: string) => void;
   onUpdateQty: (itemId: string, newQty: number) => void;
+  onUpdateRequirements: (itemId: string, requirements: string) => void;
   onClearCart: () => void;
   lang: 'ar' | 'en';
 }
 
-export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }: CartProps) {
+export function Cart({ cartItems, onRemoveItem, onUpdateQty, onUpdateRequirements, onClearCart, lang }: CartProps) {
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [generalNotes, setGeneralNotes] = useState('');
@@ -90,6 +91,15 @@ export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }
       }
     }
 
+    // Ensure every single item has written customRequirements (the description of the idea is mandatory)
+    cartItems.forEach((item) => {
+      if (!item.customRequirements || !item.customRequirements.trim()) {
+        newErrors[`requirement_${item.id}`] = isAr 
+          ? 'الرجاء كتابة وصف لفكرة الخدمة للتمكن من إتمام الطلب' 
+          : 'Please describe your idea for this service to complete the order';
+      }
+    });
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -154,8 +164,8 @@ export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }
         
         <p className="text-xs text-gray-500 mt-2 max-w-[280px] mx-auto leading-relaxed">
           {isAr 
-            ? 'تم توليد رقم طلبك الفريد بنجاح. سنقوم في منصة إرتقاء الرقمية بدراسة متطلباتك والبدء فوراً!' 
-            : 'Your unique order reference has been created. Irteqa Platform is processing your request details.'}
+            ? 'تم توليد رقم طلبك الفريد بنجاح. سنقوم في SaudiCore بدراسة متطلباتك والبدء فوراً!' 
+            : 'Your unique order reference has been created. SaudiCore is processing your request details.'}
         </p>
 
         {/* Unique Order ID Badge */}
@@ -281,6 +291,39 @@ export function Cart({ cartItems, onRemoveItem, onUpdateQty, onClearCart, lang }
                       })}
                     </div>
                   )}
+
+                  {/* Mandatory Description of the Service Idea */}
+                  <div className="space-y-1.5 my-3" id={`cart-item-req-wrap-${item.id}`}>
+                    <label className={`text-[10px] font-extrabold block text-gray-500 uppercase tracking-wide ${isAr ? 'text-right' : 'text-left'}`}>
+                      {isAr ? 'وصف فكرتك للخدمة (إلزامي)' : 'Idea Description / Project Details (Mandatory)'} <span className="text-rose-500 font-bold">*</span>
+                    </label>
+                    <textarea
+                      id={`cart-item-req-textarea-${item.id}`}
+                      placeholder={isAr ? 'مثال: تفاصيل اللعبة، الصفحات والوظائف المطلوبة، الألوان والأسلوب...' : 'E.g., game rules, desired pages, design colors...'}
+                      value={item.customRequirements || ''}
+                      onChange={(e) => {
+                        onUpdateRequirements(item.id, e.target.value);
+                        if (errors[`requirement_${item.id}`]) {
+                          setErrors((prev) => {
+                            const newErr = { ...prev };
+                            delete newErr[`requirement_${item.id}`];
+                            return newErr;
+                          });
+                        }
+                      }}
+                      rows={2}
+                      className={`w-full text-xs bg-white border rounded-xl px-3 py-2 text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:border-transparent transition-all resize-none ${
+                        errors[`requirement_${item.id}`]
+                          ? 'border-rose-300 focus:ring-rose-400 bg-rose-50/10'
+                          : 'border-gray-200 focus:ring-gray-950'
+                      }`}
+                    />
+                    {errors[`requirement_${item.id}`] && (
+                      <p className={`text-[10px] text-rose-500 font-bold ${isAr ? 'text-right' : 'text-left'}`} id={`err-req-${item.id}`}>
+                        {errors[`requirement_${item.id}`]}
+                      </p>
+                    )}
+                  </div>
 
                   {/* Quantity adjustments and prices */}
                   <div className={`flex items-center justify-between mt-3 text-xs ${isAr ? 'flex-row' : 'flex-row-reverse'}`} id={`item-qty-and-price-${item.id}`}>
